@@ -1,0 +1,23 @@
+{
+  "name": "@hoja/hoja-antigravity-plugin",
+  "version": "0.5.0",
+  "type": "module",
+  "description": "Antigravity CLI plugin: Trebol's TaskManage, its task gate, Hoja issue sync and session traces.",
+  "scripts": {
+    "vendor": "node scripts/vendor.mjs",
+    "vendor:check": "node scripts/vendor.mjs --check",
+    "build": "node scripts/build.mjs",
+    "test": "vitest run",
+    "validate": "agy plugin validate . --strict"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "vitest": "^5.1.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoja-work/hoja-antigravity-plugin.git"
+  },
+  "private": true
+}

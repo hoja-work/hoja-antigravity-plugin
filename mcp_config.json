@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "hoja": {
+      "command": "node",
+      "args": [
+        "./dist/server.mjs"
+      ],
+      "env": {
+        "HOJA_PLUGIN_HOST": "antigravity"
+      }
+    },
+    "hoja-api": {
+      "command": "node",
+      "args": [
+        "./dist/api-proxy.mjs"
+      ],
+      "env": {
+        "HOJA_PLUGIN_HOST": "antigravity"
+      }
+    }
+  }
+}

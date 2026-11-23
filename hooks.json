@@ -1,0 +1,56 @@
+{
+  "hoja": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "HOJA_PLUGIN_HOST=antigravity node ./dist/agy-hook.mjs SessionStart",
+        "timeout": 30
+      }
+    ],
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "HOJA_PLUGIN_HOST=antigravity node ./dist/agy-hook.mjs PreInvocation",
+        "timeout": 30
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "HOJA_PLUGIN_HOST=antigravity node ./dist/agy-hook.mjs PreToolUse",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "HOJA_PLUGIN_HOST=antigravity node ./dist/agy-hook.mjs PostToolUse",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "PostInvocation": [
+      {
+        "type": "command",
+        "command": "HOJA_PLUGIN_HOST=antigravity node ./dist/agy-hook.mjs PostInvocation",
+        "timeout": 20
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "HOJA_PLUGIN_HOST=antigravity node ./dist/agy-hook.mjs Stop",
+        "timeout": 20
+      }
+    ]
+  }
+}
