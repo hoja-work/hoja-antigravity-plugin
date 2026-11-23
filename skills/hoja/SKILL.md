@@ -1,6 +1,6 @@
 ---
 name: hoja
-description: Use the Hoja plugin's TaskManage workflow — plan work as tasks with acceptance questions, focus one before acting, and complete it only with real evidence. Also covers the hoja:tasks, hoja:hoja, hoja:trace and hoja:setup prompt commands and the session trace attached to Hoja issues.
+description: Use the Hoja plugin's TaskManage workflow — register every user request as a task (deliverables as sub-issues), plan work as tasks with acceptance questions, focus one before acting, and complete it only with real evidence. Also covers the hoja:tasks, hoja:hoja, hoja:trace and hoja:setup prompt commands and the session trace attached to Hoja issues.
 ---
 
 # Hoja task workflow
@@ -22,7 +22,22 @@ allowed, and everything the gate allows still goes through Antigravity's own per
 
 When a tool call is denied with `[TASK ENFORCEMENT - BLOCKED]`, create and focus a task, then retry the call.
 
-With Hoja mode on, each top-level task becomes a Hoja issue, kept current on every update and moved to Done with an
+## Register work without being asked
+
+The user should never have to remind you to track work or update a task.
+
+- **Every request that changes files or state gets a task before you act**, not only long work. Short follow-ups
+  ("commit everything", "update both READMEs", "merge and deploy") are requests too.
+- **One request, several deliverables:** one root task plus one child per deliverable (`parentTaskId`, in the same
+  batch). With Hoja mode on, the root becomes one issue and each child becomes its sub-issue.
+- **A new message outside the active task:** create a new root task for it (or a child, if it serves the same
+  goal). Never fold a new request into an unrelated task.
+- **`metadata: {"hoja":"local"}`** is for mechanical steps under a parent (run the tests, push). Never put it on a
+  user request: that request then never reaches Hoja.
+- **Before you end a reply:** complete each finished task with evidence, or `addNote` what is left. If you forget,
+  the plugin continues your turn once with a reminder.
+
+With Hoja mode on, each top-level task becomes a Hoja issue (and each child of it a sub-issue), kept current on every update and moved to Done with an
 evidence comment when it is completed. That completion also attaches this conversation's trace (turns, model calls
 with token counts, every tool call and gate block) to the issue, and the TaskManage result says so.
 
