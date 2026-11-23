@@ -25,8 +25,11 @@ Agents say "done" too easily. Hoja makes "done" mean something:
 - **Nothing mutates without a task.** A gate denies `write_file`, edits, non-read-only `run_command`s and
   write-capable MCP tools until a task is focused. Reads are always free, and what the gate allows still goes
   through Antigravity's own permissions.
-- **Your tracker stays current by itself.** With Hoja mode on, each top-level task becomes a Hoja issue, its
-  progress is rewritten in place, and an evidenced completion moves it to Done.
+- **Your tracker stays current by itself.** With Hoja mode on, each top-level task becomes a Hoja issue and each
+  of its child tasks a sub-issue; progress is rewritten in place, and an evidenced completion moves it to Done.
+- **Nobody has to remind the agent.** Every message you write tells the agent how to register it (a new task, the
+  open one, or a child of the active one), and when a reply ends after real work with its task unreconciled or
+  untracked, the agent is sent back once to complete it with evidence or note what is left.
 - **Every conversation leaves a trace.** Turns, model calls with token counts, every tool call with its duration and
   outcome, and gate blocks are recorded; a completed task's trace is attached to its issue and opens in Hoja's
   trace viewer.
@@ -73,7 +76,7 @@ Then work as usual, and type `hoja:setup` to check everything. An abridged sessi
 | **`TaskManage`** | Ordered, durable tasks with dependencies, sub-tasks, notes and 1–12 acceptance questions each. Completion is validated against the workspace and the conversation's transcript. |
 | **Task gate** | Trebol's Swarm hook pipeline: denies non-read-only tools without a focused task (`block`), or only nudges (`advise`). Also: the completion nudge, the task-maintenance nudge, the bare-`sleep` blocker and the stdin-conflict guard. |
 | **Auto-continue** | When a gate denial ends the turn, the `Stop` hook answers `continue` with exactly what to do, within the same bounded budget Trebol uses. |
-| **Hoja mode** | `hoja_list`, `hoja_get` and `hoja_project`, plus automatic publication: one Hoja issue per coarse task, acceptance questions in the description, an evidence comment and Done on completion. |
+| **Hoja mode** | `hoja_list`, `hoja_get` and `hoja_project`, plus automatic publication: one Hoja issue per top-level task and one sub-issue per child of it (`hoja:"local"` keeps a step out), acceptance questions in the description, an evidence comment and Done on completion. |
 | **Session traces** | A `hoja.trace/v1` trace per conversation, attached to the issue when its task completes. See [Session traces](#session-traces). |
 | **Hosted Hoja API** | The workspace's full MCP API (issues, comments, decisions, projects, cycles) as a second server, `hoja-api`. Its read tools are never gated; its writes are. |
 | **Prompt commands** | `hoja:tasks`, `hoja:hoja on\|off\|status`, `hoja:trace [upload [ISSUE]\|path]` and `hoja:setup`, typed as the whole prompt and answered before the model is called — no tokens spent. |
@@ -160,7 +163,8 @@ Each conversation's trace is built from the hook records (millisecond timings, g
 one model call per `PLANNER_RESPONSE` with its model and input, cached and output token counts; one tool call per
 result step, matched to its hooks by step index; turns from `USER_INPUT`. A completed task linked to an issue gets
 the trace attached (`antigravity-<id>-<time>.trace.json`, "Antigravity trace · …"); `hoja:trace` shows a summary and
-`hoja:trace upload HOJA-123` attaches it by hand. Antigravity has no session-end event, so the saved trace file is
+`hoja:trace upload HOJA-123` attaches it by hand. Once an issue is linked, the trace is also synced in the background at the end of every reply
+(and at most every 30 s after a tool batch); Antigravity has no session-end event, so the saved trace file is
 refreshed after every turn. Format and privacy rules:
 [Claude Code plugin README](https://github.com/hoja-work/hoja-claude-plugin#session-traces).
 
