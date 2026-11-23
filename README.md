@@ -96,6 +96,18 @@ Antigravity has no plugin settings UI, so configuration comes from the environme
 
 Without credentials, TaskManage and the gate still work and publication is skipped.
 
+## Updates
+
+Antigravity has no plugin update command. An installed copy that kept its `.git` folder updates with
+`git -C <plugin dir> pull --ff-only`. Otherwise clone the repository again and re-run `agy plugin install` on it.
+Restart Antigravity afterwards.
+
+At most once a day (six hours after a failed attempt) the SessionStart hook reads the version in this repository's
+`package.json` on GitHub. That is a plain request with nothing about you in it, it gives up after 1.5 s, and the answer
+is cached in the plugin's data directory. When a newer version exists, the agent is asked to tell you once, in one sentence, at the start of its first reply (Antigravity's hooks can only reach the model) with the exact
+update command. Offline or rate-limited means no notice, never an error. Set `HOJA_PLUGIN_UPDATE_CHECK=off` to turn the
+check off.
+
 ## How it works
 
 Antigravity runs **command hooks only** — no hook can call an MCP tool the way Claude Code's and Codex's `mcp_tool`
