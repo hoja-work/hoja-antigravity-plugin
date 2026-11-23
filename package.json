@@ -1,6 +1,6 @@
 {
   "name": "@hoja/hoja-antigravity-plugin",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "type": "module",
   "description": "Antigravity CLI plugin: Trebol's TaskManage, its task gate, Hoja issue sync and session traces.",
   "scripts": {
