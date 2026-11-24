@@ -1,7 +1,7 @@
 {
   "name": "hoja",
   "displayName": "Hoja",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Tasks that can't be marked done without proof, and a trace of how the work was done: Trebol's TaskManage with evidence-checked completion, a task gate on mutating tools, Hoja issue sync, and session traces attached to the issue the work belongs to.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
