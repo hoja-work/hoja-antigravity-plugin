@@ -82,6 +82,19 @@ Then work as usual, and type `hoja:setup` to check everything. An abridged sessi
 | **Prompt commands** | `hoja:tasks`, `hoja:hoja on\|off\|status`, `hoja:trace [upload [ISSUE]\|path]` and `hoja:setup`, typed as the whole prompt and answered before the model is called — no tokens spent. |
 | **Skill** | `skills/hoja` teaches the create → focus → evidence workflow. |
 
+## Screenshots, recordings and other artifacts
+
+Anything a person should see goes into Hoja as an upload, never as a local path
+(`/tmp/x.png`, `/root/...`, `file://`), because a path only opens on the machine that wrote it.
+
+- `hoja_artifactUpload` takes `paths` (and optionally `issueId`, `titles`, `ttlDays`). It
+  sends each file straight to Hoja's storage (up to 512 MB, no base64), attaches it to the
+  task, and returns a shareable URL plus Markdown to paste. Use the URLs as `mediaUrl` on
+  decision options to let a person choose between many variants.
+- When an agent writes a task, comment, review request or decision that mentions an existing
+  local image, video or PDF, the plugin uploads the file first and replaces the path with its
+  link. Paths that do not exist are left alone.
+
 ## Configuration
 
 Antigravity has no plugin settings UI, so configuration comes from the environment the `agy` process starts with:
